@@ -1,0 +1,46 @@
+{
+  "name": "ByteAccordion",
+  "version": "1.0.0",
+  "description": "ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.",
+  "main": "build/ByteAccordion.js",
+  "types": "build/ByteAccordion.d.ts",
+  "scripts": {
+    "style": "tslint ./src/*.ts -p ./tsconfig.json --type-check",
+    "unit": "mocha --compilers ts:ts-node/register ./test/*.spec.ts",
+    "test": "npm run style && npm run unit",
+    "build": "tsc",
+    "qc": "npm run build && npm run style && npm run unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/damianb/ByteAccordion.git"
+  },
+  "keywords": [
+    "file",
+    "buffer",
+    "expanding",
+    "consumable",
+    "stream"
+  ],
+  "author": "Damian Bushong <katana@odios.us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/damianb/ByteAccordion/issues"
+  },
+  "homepage": "https://github.com/damianb/ByteAccordion#readme",
+  "dependencies": {
+    "@types/fs-extra": "^4.0.2",
+    "@types/node": "^8.0.34",
+    "fs-extra": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.43",
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
+    "tslint-config-standard": "^6.0.1",
+    "typescript": "^2.5.3"
+  }
+}
