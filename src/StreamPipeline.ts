@@ -9,6 +9,11 @@
 import * as fs from 'fs-extra'
 import { ExpandingFile } from './ExpandingFile'
 
+/**
+ * @private
+ * @hidden
+ * @ignore
+ */
 export interface StreamOptions {
   fd?: number
   flags?: string
@@ -18,41 +23,67 @@ export interface StreamOptions {
   end?: number
 }
 
+/**
+ * The interface abstraction for results when calling StreamPipeline.pump().
+ */
 export interface PumpResult {
+  /**
+   * How far into the file was this content written?
+   */
   offset: number
+
+  /**
+   * How much did we just write to the file?
+   */
   wrote: number
 }
 
-//
-// StreamPipeline - provides the functionality to serially combine multiple read streams into one write stream.
-//
 export class StreamPipeline {
   /**
    * The filesystem WriteStream instance we'll be pumping all input into.
    *
-   * @type {fs.WriteStream|undefined}
+   * @private
    */
   public destination: fs.WriteStream | undefined
 
   /**
    * The ExpandingFile instance we originally started with.
    *
-   * @type {ExpandingFile|undefined}
+   * @private
    */
-  public _destination: ExpandingFile | undefined
+  public sbuf: ExpandingFile | undefined
 
   /**
-   * StreamPipeline constructor
+   * StreamPipeline is a class designed to wrap around ExpandingFile instances to specifically aid in copying large chunks of files into the destination,
+   *   making it ideal for use with custom archive formats with the ability to just write large chunks to your files piece by piece and not care about anything like stream events.
+   *   Create a StreamPipeline and pump as many chunks into the file as you need.
+   *
    * @return {StreamPipeline}
+   *
+   * @example
+   * ```
+   * import { ExpandingFile, StreamPipeline } from 'ByteAccordion'
+   * sbuf = new ExpandingFile('/path/to/file/to/write/to.txt')
+   * sfile = new StreamPipeline()
+   *
+   * await sbuf.open()
+   * await sfile.load(sbuf)
+   *
+   * await sfile.pump(Buffer.from('TEST'))
+   *
+   * // note that this shines when combined with reads from larger files
+   * //   due to the heavy use of streams when reading and writing.
+   * //   (it works great when building archives!)
+   * ```
    */
   constructor () {
-    this.destination = this._destination = undefined
+    this.destination = this.sbuf = undefined
   }
 
   /**
    * Loads the specified destination and prepares the pipeline to it.
    *
-   * @param  {ExpandingFile} dest - The ExpandingFile instance for the file to write to. NOT compatible with ExpandingBuffer.
+   * @param  dest - The ExpandingFile instance for the file to write to. **NOT compatible with ExpandingBuffer.**
    * @return {Promise:void}
    */
   public async load (dest: ExpandingFile): Promise<void> {
@@ -60,7 +91,7 @@ export class StreamPipeline {
       throw new Error('StreamPipeline.load expects an already-opened ExpandingFile instance.')
     }
 
-    this._destination = dest
+    this.sbuf = dest
     let streamOpts: StreamOptions = {
       fd: dest.fd,
       flags: 'w',
@@ -76,9 +107,9 @@ export class StreamPipeline {
   /**
    * Pumps the given "source" contents into the destination specified in StreamPipeline.load().
    *
-   * @param  {Buffer|Number|String} source - The source Buffer, file descriptor (integer), or filepath (string) to read from.
-   * @param  {Number} start - (optional) Start point for reading, passed to fs.createReadStream to identify a section to read from.
-   * @param  {Number} length - (optional) Identifies how many bytes to read and pump into the destination.
+   * @param  source - The source Buffer, file descriptor (integer), or filepath (string) to read from.
+   * @param  start - (optional) Start point for reading, passed to fs.createReadStream to identify a section to read from.
+   * @param  length - (optional) Identifies how many bytes to read and pump into the destination.
    * @return {Promise:Object} - Returns an object containing the offset and length of what was just written to the destination.
    */
   public async pump (source: Buffer|number|string, start?: number, length?: number): Promise<PumpResult> {
@@ -132,23 +163,23 @@ export class StreamPipeline {
    *   properly work with the stream events.
    *
    * @private
-   * @param  {Stream.Readable|Buffer} content - The content to pipe into the destination stream.
+   * @param  content - The content to pipe into the destination stream.
    * @return {Promise:Object} - Returns an object containing the offset and length of what was just written to the destination.
    */
   public _pump (content: fs.ReadStream|Buffer): Promise<PumpResult> {
     return new Promise((resolve, reject) => {
       if (Buffer.isBuffer(content)) {
-        if (!this._destination || !this.destination) {
+        if (!this.sbuf || !this.destination) {
           return
         }
 
         this.destination.write(content, () => {
-          if (!this._destination) {
+          if (!this.sbuf) {
             return
           }
 
-          let oldPosition = this._destination.position
-          this._destination.position += content.length
+          let oldPosition = this.sbuf.position
+          this.sbuf.position += content.length
 
           const res: PumpResult = { offset: oldPosition, wrote: content.length }
           return resolve(res)
@@ -160,13 +191,13 @@ export class StreamPipeline {
         }
 
         content.on('end', () => {
-          if (!this._destination) {
+          if (!this.sbuf) {
             return
           }
 
           content.unpipe(this.destination)
-          let oldPosition = this._destination.position
-          this._destination.position += content.bytesRead
+          let oldPosition = this.sbuf.position
+          this.sbuf.position += content.bytesRead
 
           const res: PumpResult = { offset: oldPosition, wrote: content.bytesRead }
           return resolve(res)

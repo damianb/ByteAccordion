@@ -5,11 +5,13 @@
   "main": "build/ByteAccordion.js",
   "types": "build/ByteAccordion.d.ts",
   "scripts": {
+    "docs": "typedoc --out docs/ --mode file ./src/ --theme minimal",
     "style": "tslint ./src/*.ts -p ./tsconfig.json --type-check",
     "unit": "mocha --compilers ts:ts-node/register ./test/*.spec.ts",
     "test": "npm run style && npm run unit",
     "build": "tsc",
-    "qc": "npm run build && npm run style && npm run unit"
+    "qc": "npm run build && npm run style && npm run unit",
+    "prepublishOnly": "npm run docs && npm run build && npm run style && npm run unit"
   },
   "repository": {
     "type": "git",
@@ -41,6 +43,7 @@
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "tslint-config-standard": "^6.0.1",
+    "typedoc": "^0.9.0",
     "typescript": "^2.5.3"
   }
 }

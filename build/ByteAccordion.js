@@ -17,3 +17,4 @@ var ExpandingFile_1 = require("./ExpandingFile");
 exports.ExpandingFile = ExpandingFile_1.ExpandingFile;
 var StreamPipeline_1 = require("./StreamPipeline");
 exports.StreamPipeline = StreamPipeline_1.StreamPipeline;
+//# sourceMappingURL=ByteAccordion.js.map

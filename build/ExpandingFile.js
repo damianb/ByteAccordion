@@ -1,24 +1,29 @@
 "use strict";
-//
-// ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
-// ---
-// @copyright (c) 2017 Damian Bushong <katana@odios.us>
-// @license MIT license
-// @url <https://github.com/damianb/ByteAccordion>
-//
+/**
+ * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
+ *
+ * @copyright (c) 2017 Damian Bushong <katana@odios.us>
+ * @license MIT license
+ * @url <https://github.com/damianb/ByteAccordion>
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs-extra");
-//
-// ExpandingFile - provides an "expanding" file interface to ease writing of byte-level resources.
-//
-// TODO: provide .reset() method, probably using fs.truncate() or something.
 class ExpandingFile {
     /**
-     * ExpandingFile constructor
+     * ExpandingFile is a class designed to wrap around node.js file to allow for more fluid writing capabilities,
+     *   making it possible to just write to your files and not care about their lengths, inputs, or stream events.
+     *   Create an ExpandingFile and just call write as much as you need.
      *
      * @param  {string} path - Path to the file that we're going to be writing to.
-     *
      * @return {ExpandingFile}
+     *
+     * @example
+     * ```
+     * import { ExpandingFile } from 'ByteAccordion'
+     * sbuf = new ExpandingFile('/path/to/file.txt')
+     *
+     * await sbuf.write('test')
+     * ```
      */
     constructor(path) {
         this.path = path;
@@ -27,9 +32,17 @@ class ExpandingFile {
     }
     /**
      * Opens the file for writing based off of the path provided to the constructor.
-     * Must occur before writing to the file.
+     *   Must occur before writing to the file.
      *
      * @return {Promise:void}
+     *
+     * @example
+     * ```
+     * const filepath = '/path/to/file.txt'
+     * const sbuf = new ExpandingFile(filepath)
+     * await sbuf.open()
+     * // now able to write to sbuf!
+     * ```
      */
     async open() {
         this.fd = await fs.open(this.path, 'w', 0o755);
@@ -40,6 +53,19 @@ class ExpandingFile {
      * Closes the file, preventing future writing.
      *
      * @return {Promise:void}
+     *
+     * @example
+     * ```
+     * const filepath = '/path/to/file.txt'
+     * const sbuf = new ExpandingFile(filepath)
+     * await sbuf.open()
+     * // now able to write with sbuf!
+     *
+     * // ...
+     *
+     * await sbuf.close()
+     * // no longer able to read from sbuf, state is reset and clean.
+     * ```
      */
     async close() {
         if (this.fd) {
@@ -52,9 +78,18 @@ class ExpandingFile {
     /**
      * Write to the expanding file.
      *
-     * @param  {Buffer|Array|string|number} input - What to write to the file?
-     *
+     * @param  input - What to write to the file?
      * @return {Promise:number} - Returns how many bytes have been written to the file so far.
+     *
+     * @example
+     * ```
+     * const filepath = '/path/to/file.txt'
+     * const sbuf = new ExpandingFile(filePath)
+     * await sbuf.write('test')
+     * await sbuf.write('test2')
+     *
+     * // the file, when opened, will contain "testtest2"
+     * ```
      */
     async write(input) {
         if (!this.fd) {
@@ -81,3 +116,4 @@ class ExpandingFile {
     }
 }
 exports.ExpandingFile = ExpandingFile;
+//# sourceMappingURL=ExpandingFile.js.map
