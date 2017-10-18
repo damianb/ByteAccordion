@@ -52,7 +52,7 @@ export class ConsumableBuffer implements ConsumableResource {
   /**
    * Resets the returned "buffer" to the original one previously passed in.
    *
-   * @return {Promise:void}
+   * @return {Promise<void>}
    *
    * @example
    * ```
@@ -74,7 +74,7 @@ export class ConsumableBuffer implements ConsumableResource {
    * Previously read buffer contents will not be available for read again unless the ConsumableBuffer is reset.
    *
    * @param  bytes - The number of bytes to read and advance within the buffer.
-   * @return {Promise:Buffer} - Returns a buffer containing the next selected bytes from the ConsumableBuffer.
+   * @return {Promise<Buffer>} - Returns a buffer containing the next selected bytes from the ConsumableBuffer.
    *
    * @throws {Error} - Throws when the bytes parameter isn't a finite number, is NaN, or is <= 0.
    * @throws {RangeError} - Throws when we try to read beyond the Buffer's contents.
@@ -110,7 +110,7 @@ export class ConsumableBuffer implements ConsumableResource {
    * This WILL NOT seek backwards - use ConsumableBuffer.reset()!
    *
    * @param  bytes - The number of bytes to advance within the buffer.
-   * @return {Promise:void}
+   * @return {Promise<void>}
    *
    * @throws {RangeError} - Throws when we try to seek beyond the Buffer's contents.
    *
@@ -139,7 +139,7 @@ export class ConsumableBuffer implements ConsumableResource {
    * Seeks absolutely within the *original* buffer.
    *
    * @param  bytes - How many bytes into the original buffer do we want to seek?
-   * @return {Promise:void}
+   * @return {Promise<void>}
    *
    * @example
    * ```

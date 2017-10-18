@@ -42,7 +42,7 @@ export class ExpandingBuffer implements ExpandingResource {
   /**
    * Resets the expanding "buffer" to an empty state.
    *
-   * @return {Promise:void}
+   * @return {Promise<void>}
    *
    * @example
    * ```
@@ -64,7 +64,7 @@ export class ExpandingBuffer implements ExpandingResource {
    * Write to the expanding "buffer".
    *
    * @param  input - What to write to the buffer?
-   * @return {Promise:number} - Returns the length of the current buffer.
+   * @return {Promise<number>} - Returns the length of the current buffer.
    *
    * @example
    * ```

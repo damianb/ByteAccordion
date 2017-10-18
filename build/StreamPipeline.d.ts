@@ -68,7 +68,7 @@ export declare class StreamPipeline {
      * Loads the specified destination and prepares the pipeline to it.
      *
      * @param  dest - The ExpandingFile instance for the file to write to. **NOT compatible with ExpandingBuffer.**
-     * @return {Promise:void}
+     * @return {Promise<void>}
      */
     load(dest: ExpandingFile): Promise<void>;
     /**
@@ -77,7 +77,7 @@ export declare class StreamPipeline {
      * @param  source - The source Buffer, file descriptor (integer), or filepath (string) to read from.
      * @param  start - (optional) Start point for reading, passed to fs.createReadStream to identify a section to read from.
      * @param  length - (optional) Identifies how many bytes to read and pump into the destination.
-     * @return {Promise:Object} - Returns an object containing the offset and length of what was just written to the destination.
+     * @return {Promise<PumpResult>} - Returns an object containing the offset and length of what was just written to the destination.
      */
     pump(source: Buffer | number | string, start?: number, length?: number): Promise<PumpResult>;
     /**
@@ -87,7 +87,7 @@ export declare class StreamPipeline {
      *
      * @private
      * @param  content - The content to pipe into the destination stream.
-     * @return {Promise:Object} - Returns an object containing the offset and length of what was just written to the destination.
+     * @return {Promise<PumpResult>} - Returns an object containing the offset and length of what was just written to the destination.
      */
     _pump(content: fs.ReadStream | Buffer): Promise<PumpResult>;
 }

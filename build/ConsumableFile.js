@@ -42,7 +42,7 @@ class ConsumableFile {
     /**
      * Opens the file for reading based off of the path provided to the constructor.
      *
-     * @return {Promise:void}
+     * @return {Promise<void>}
      *
      * @throws {Error} - Throws when the path provided isn't a readable file.
      *
@@ -70,7 +70,7 @@ class ConsumableFile {
     /**
      * Closes the file, preventing future reading.
      *
-     * @return {Promise:void}
+     * @return {Promise<void>}
      *
      * @example
      * ```
@@ -96,7 +96,7 @@ class ConsumableFile {
     /**
      * Resets the ConsumableFile to its origin position.
      *
-     * @return {Promise:void}
+     * @return {Promise<void>}
      *
      * @example
      * ```
@@ -121,7 +121,7 @@ class ConsumableFile {
      * Reads within the file.
      *
      * @param  bytes - The number of bytes to read and advance within the buffer.
-     * @return {Promise:Buffer} - Returns a buffer containing the next selected bytes from the ConsumableFile.
+     * @return {Promise<Buffer>} - Returns a buffer containing the next selected bytes from the ConsumableFile.
      *
      * @throws {Error} - Throws when the file hasn't yet been opened.
      * @throws {Error} - Throws when the bytes parameter isn't a finite number, is NaN, or is <= 0.
@@ -159,7 +159,7 @@ class ConsumableFile {
      * Seeks within the file to reposition for read, relative to the current position.
      *
      * @param  bytes - The number of bytes to shift within the buffer; this can be negative.
-     * @return {Promise:void}
+     * @return {Promise<void>}
      *
      * @see ConsumableFile.aseek
      *
@@ -182,7 +182,7 @@ class ConsumableFile {
      * Seeks within the file to reposition for read, using an absolute position.
      *
      * @param  bytes - How many bytes into the file do we want to seek?
-     * @return {Promise:void}
+     * @return {Promise<void>}
      *
      * @throws {Error} - Throws when the file hasn't been opened yet.
      * @throws {Error} - Throws when the bytes parameter isn't a finite number, is NaN, or is <= 0.

@@ -34,7 +34,7 @@ class ExpandingFile {
      * Opens the file for writing based off of the path provided to the constructor.
      *   Must occur before writing to the file.
      *
-     * @return {Promise:void}
+     * @return {Promise<void>}
      *
      * @example
      * ```
@@ -52,7 +52,7 @@ class ExpandingFile {
     /**
      * Closes the file, preventing future writing.
      *
-     * @return {Promise:void}
+     * @return {Promise<void>}
      *
      * @example
      * ```
@@ -79,7 +79,7 @@ class ExpandingFile {
      * Write to the expanding file.
      *
      * @param  input - What to write to the file?
-     * @return {Promise:number} - Returns how many bytes have been written to the file so far.
+     * @return {Promise<number>} - Returns how many bytes have been written to the file so far.
      *
      * @example
      * ```

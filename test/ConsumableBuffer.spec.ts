@@ -1,12 +1,10 @@
-//
-// ConsumableBuffer - JS library for easy buffer reading/parsing.
-// ---
-// @copyright (c) 2017 Damian Bushong <katana@odios.us>
-// @license MIT license
-// @url <https://github.com/damianb/ConsumableBuffer>
-//
-/* eslint-env mocha */
-'use strict'
+/**
+ * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
+ *
+ * @copyright (c) 2017 Damian Bushong <katana@odios.us>
+ * @license MIT license
+ * @url <https://github.com/damianb/ByteAccordion>
+ */
 
 import { expect } from 'chai'
 import { ConsumableBuffer } from '../src/ConsumableBuffer'

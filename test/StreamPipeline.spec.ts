@@ -1,12 +1,10 @@
-//
-// StreamPipeline - Stream pipeline library.
-// ---
-// @copyright (c) 2017 Damian Bushong <katana@odios.us>
-// @license MIT license
-// @url <https://github.com/damianb/StreamPipeline>
-//
-/* globals describe it beforeEach afterEach  */
-'use strict'
+/**
+ * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
+ *
+ * @copyright (c) 2017 Damian Bushong <katana@odios.us>
+ * @license MIT license
+ * @url <https://github.com/damianb/ByteAccordion>
+ */
 
 import { expect } from 'chai'
 import * as fs from 'fs-extra'

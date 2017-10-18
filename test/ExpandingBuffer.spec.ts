@@ -1,18 +1,16 @@
-//
-// ExpandingBuffer - JS library for easy byte-level buffer writing.
-// ---
-// @copyright (c) 2017 Damian Bushong <katana@odios.us>
-// @license MIT license
-// @url <https://github.com/damianb/ExpandingBuffer>
-//
-/* eslint-env mocha */
-'use strict'
+/**
+ * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
+ *
+ * @copyright (c) 2017 Damian Bushong <katana@odios.us>
+ * @license MIT license
+ * @url <https://github.com/damianb/ByteAccordion>
+ */
 
 import { expect } from 'chai'
 import { ExpandingBuffer } from './../src/ExpandingBuffer'
 
 describe('ExpandingBuffer tests', () => {
-  let sbuf :ExpandingBuffer
+  let sbuf: ExpandingBuffer
   beforeEach(() => {
     sbuf = new ExpandingBuffer()
   })
