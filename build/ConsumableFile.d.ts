@@ -1,4 +1,3 @@
-/// <reference types="node" />
 /**
  * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
  *
@@ -6,6 +5,7 @@
  * @license MIT license
  * @url <https://github.com/damianb/ByteAccordion>
  */
+/// <reference types="node" />
 import { ConsumableResource } from './ConsumableResource';
 export declare class ConsumableFile implements ConsumableResource {
     /**
@@ -19,13 +19,13 @@ export declare class ConsumableFile implements ConsumableResource {
      *
      * @private
      */
-    fd: number | undefined;
+    fd?: number;
     /**
      * The size of the file we're consuming, in bytes.
      *
      * @private
      */
-    filesize: number | undefined;
+    filesize?: number;
     /**
      * How far into the file we've read, in bytes.
      */

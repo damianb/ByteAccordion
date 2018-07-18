@@ -1,3 +1,10 @@
+/**
+ * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
+ *
+ * @copyright (c) 2017 Damian Bushong <katana@odios.us>
+ * @license MIT license
+ * @url <https://github.com/damianb/ByteAccordion>
+ */
 /// <reference types="node" />
 import { ExpandingResource } from './ExpandingResource';
 export declare class ExpandingFile implements ExpandingResource {
@@ -12,7 +19,7 @@ export declare class ExpandingFile implements ExpandingResource {
      *
      * @private
      */
-    fd: number | undefined;
+    fd?: number;
     /**
      * How far into the file we are currently, in bytes.
      */

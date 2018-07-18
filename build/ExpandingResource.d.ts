@@ -1,4 +1,3 @@
-/// <reference types="node" />
 /**
  * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
  *
@@ -6,6 +5,7 @@
  * @license MIT license
  * @url <https://github.com/damianb/ByteAccordion>
  */
+/// <reference types="node" />
 export interface ExpandingResource {
     /**
      * How many bytes have we written to this resource?
