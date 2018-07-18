@@ -1,16 +1,17 @@
 "use strict";
-/**
- * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
- *
- * @copyright (c) 2017 Damian Bushong <katana@odios.us>
- * @license MIT license
- * @url <https://github.com/damianb/ByteAccordion>
- */
+//
+// ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
+//
+// @copyright (c) 2017 Damian Bushong <katana@odios.us>
+// @license MIT license
+// @url <https://github.com/damianb/ByteAccordion>
+//
 Object.defineProperty(exports, "__esModule", { value: true });
 class ExpandingBuffer {
     /**
      * ExpandingBuffer is a class designed to wrap around node.js buffers to allow for more fluid writing capabilities,
-     *   making it possible to just write to your buffers and not care about their lengths.  Create an ExpandingBuffer and just call write as much as you need.
+     *   making it possible to just write to your buffers and not care about their lengths.
+     *   Create an ExpandingBuffer and just call write as much as you need.
      *
      * @return {ExpandingBuffer}
      *
