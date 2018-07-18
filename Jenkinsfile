@@ -14,7 +14,9 @@ pipeline {
         NPM_CONFIG_LOGLEVEL = 'warn'
       }
       steps {
-        // sh "npm install -g yarn@${env.YARN_VERSION}"
+        sh "npm install -g yarn@${env.YARN_VERSION}"
+        // workaround for https://github.com/nodejs/docker-node/issues/661
+        sh 'chmod +x /usr/local/lib/node_modules/yarn/bin/yarn.js'
         sh 'yarn --offline'
       }
     }
