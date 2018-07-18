@@ -84,7 +84,7 @@ describe('StreamPipeline tests', () => {
 
     it('should correctly pump only a part of a file if specified', async () => {
       await sfile.pump(path.join(__dirname, '/samples/TestFile1.txt'), 5, 4)
-      sbuf.close()
+      await sbuf.close()
 
       let res = (await fs.readFile(filePath)).toString('utf8')
 
