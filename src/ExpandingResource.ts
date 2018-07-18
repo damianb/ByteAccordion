@@ -1,10 +1,10 @@
-/**
- * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
- *
- * @copyright (c) 2017 Damian Bushong <katana@odios.us>
- * @license MIT license
- * @url <https://github.com/damianb/ByteAccordion>
- */
+//
+// ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
+//
+// @copyright (c) 2017 Damian Bushong <katana@odios.us>
+// @license MIT license
+// @url <https://github.com/damianb/ByteAccordion>
+//
 
 export interface ExpandingResource {
 	/**
@@ -18,5 +18,5 @@ export interface ExpandingResource {
    * @param  input - What to write to the buffer.
    * @return {Promise<number>} - Returns the length of the current resource.
    */
-  write (input: Buffer | number[] | string | number): Promise<number>
+  write (input: Buffer | number[] | number | string): Promise<number>
 }

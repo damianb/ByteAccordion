@@ -1,10 +1,10 @@
-/**
- * ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
- *
- * @copyright (c) 2017 Damian Bushong <katana@odios.us>
- * @license MIT license
- * @url <https://github.com/damianb/ByteAccordion>
- */
+//
+// ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
+//
+// @copyright (c) 2017 Damian Bushong <katana@odios.us>
+// @license MIT license
+// @url <https://github.com/damianb/ByteAccordion>
+//
 
 import * as fs from 'fs-extra'
 
@@ -120,7 +120,7 @@ export class ExpandingFile implements ExpandingResource {
    * // the file, when opened, will contain "testtest2"
    * ```
    */
-  public async write (input: Buffer | number[] | string | number): Promise<number> {
+  public async write (input: Buffer | number[] | number | string): Promise<number> {
     if (!this.fd) {
       throw new Error('File does not yet appear to be opened.')
     }
