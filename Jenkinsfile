@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'node:8.11.1'
+      image 'node:8.11.1-alpine'
     }
   }
   environment {
@@ -14,7 +14,7 @@ pipeline {
         NPM_CONFIG_LOGLEVEL = 'warn'
       }
       steps {
-        sh "npm install -g yarn@${env.YARN_VERSION}"
+        // sh "npm install -g yarn@${env.YARN_VERSION}"
         sh 'yarn --offline'
       }
     }
