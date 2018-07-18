@@ -7,6 +7,7 @@
 //
 
 import * as fs from 'fs-extra'
+
 import { ExpandingFile } from './ExpandingFile'
 
 /**
@@ -112,7 +113,7 @@ export class StreamPipeline {
    * @param  length - (optional) Identifies how many bytes to read and pump into the destination.
    * @return {Promise<PumpResult>} - Returns an object containing the offset and length of what was just written to the destination.
    */
-  public async pump (source: Buffer|number|string, start?: number, length?: number): Promise<PumpResult> {
+  public async pump (source: Buffer | number | string, start?: number, length?: number): Promise<PumpResult> {
     let fd = null
     if (Buffer.isBuffer(source)) {
       return this._pump(source)
@@ -166,7 +167,7 @@ export class StreamPipeline {
    * @param  content - The content to pipe into the destination stream.
    * @return {Promise<PumpResult>} - Returns an object containing the offset and length of what was just written to the destination.
    */
-  public _pump (content: fs.ReadStream|Buffer): Promise<PumpResult> {
+  public _pump (content: fs.ReadStream | Buffer): Promise<PumpResult> {
     return new Promise((resolve, reject) => {
       if (Buffer.isBuffer(content)) {
         if (!this.sbuf || !this.destination) {

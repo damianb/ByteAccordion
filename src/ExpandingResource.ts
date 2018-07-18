@@ -18,5 +18,5 @@ export interface ExpandingResource {
    * @param  input - What to write to the buffer.
    * @return {Promise<number>} - Returns the length of the current resource.
    */
-  write (input: Buffer|number[]|string|number): Promise<number>
+  write (input: Buffer | number[] | string | number): Promise<number>
 }

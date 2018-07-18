@@ -7,6 +7,7 @@
  */
 
 import * as fs from 'fs-extra'
+
 import { ExpandingResource } from './ExpandingResource'
 
 export class ExpandingFile implements ExpandingResource {
@@ -24,7 +25,7 @@ export class ExpandingFile implements ExpandingResource {
    *
    * @private
    */
-  public fd: number|undefined
+  public fd?: number
 
   /**
    * How far into the file we are currently, in bytes.
@@ -119,7 +120,7 @@ export class ExpandingFile implements ExpandingResource {
    * // the file, when opened, will contain "testtest2"
    * ```
    */
-  public async write (input: Buffer|number[]|string|number): Promise<number> {
+  public async write (input: Buffer | number[] | string | number): Promise<number> {
     if (!this.fd) {
       throw new Error('File does not yet appear to be opened.')
     }

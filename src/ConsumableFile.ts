@@ -6,8 +6,9 @@
  * @url <https://github.com/damianb/ByteAccordion>
  */
 
-import { ConsumableResource } from './ConsumableResource'
 import * as fs from 'fs-extra'
+
+import { ConsumableResource } from './ConsumableResource'
 
 export class ConsumableFile implements ConsumableResource {
   /**
@@ -22,14 +23,14 @@ export class ConsumableFile implements ConsumableResource {
    *
    * @private
    */
-  public fd: number|undefined
+  public fd?: number
 
   /**
    * The size of the file we're consuming, in bytes.
    *
    * @private
    */
-  public filesize: number|undefined
+  public filesize?: number
 
   /**
    * How far into the file we've read, in bytes.

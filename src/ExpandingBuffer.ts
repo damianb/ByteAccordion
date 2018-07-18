@@ -75,7 +75,7 @@ export class ExpandingBuffer implements ExpandingResource {
    * // sbuf.buf, when dumped, will be a buffer containing "testtest2"
    * ```
    */
-  public async write (input: Buffer|number[]|string|number): Promise<number> {
+  public async write (input: Buffer | number[] | string | number): Promise<number> {
     let inBuffer = null
     if (Buffer.isBuffer(input)) {
       inBuffer = input
