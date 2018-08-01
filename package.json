@@ -32,7 +32,7 @@
   "homepage": "https://github.com/damianb/ByteAccordion#readme",
   "dependencies": {
     "@types/fs-extra": "^5.0.4",
-    "@types/node": "^8.0.34",
+    "@types/node": "^8.0.45",
     "fs-extra": "^7.0.0"
   },
   "devDependencies": {
