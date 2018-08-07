@@ -1,0 +1,10 @@
+.yarn_packages/*
+docs/*
+node_modules/*
+src/*
+test/*
+.directory
+.yarnrc
+Jenkinsfile
+tsconfig.json
+tslint.json
