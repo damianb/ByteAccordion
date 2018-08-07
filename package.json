@@ -1,5 +1,5 @@
 {
-  "name": "ByteAccordion",
+  "name": "byteaccordion",
   "version": "1.1.1",
   "description": "ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.",
   "main": "build/ByteAccordion.js",
