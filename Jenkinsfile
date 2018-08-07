@@ -10,6 +10,12 @@ pipeline {
     failure {
       updateGitlabCommitStatus name: 'jenkins', state: 'failed'
     }
+    unstable {
+      updateGitlabCommitStatus name: 'jenkins', state: 'failed'
+    }
+    aborted {
+      updateGitlabCommitStatus name: 'jenkins', state: 'canceled'
+    }
     success {
       updateGitlabCommitStatus name: 'jenkins', state: 'success'
     }
@@ -54,11 +60,15 @@ pipeline {
 
     stage('Build') {
       parallel {
+        // currently disabled - no use building docs as we can't commit them back
+        //   without causing a build loop.
+        /*
         stage('Build Docs') {
           steps {
             sh 'npm run docs'
           }
         }
+        */
         stage('Build JS') {
           steps {
             sh 'npm run build'
