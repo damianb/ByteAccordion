@@ -31,7 +31,7 @@ pipeline {
   stages {
     stage('Prepare') {
       environment {
-        YARN_VERSION = '1.6.0'
+        YARN_VERSION = '1.9.4'
         NPM_CONFIG_LOGLEVEL = 'warn'
       }
       steps {
