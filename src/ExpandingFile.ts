@@ -42,7 +42,7 @@ export class ExpandingFile implements ExpandingResource {
    *
    * @example
    * ```
-   * import { ExpandingFile } from 'ByteAccordion'
+   * import { ExpandingFile } from 'byteaccordion'
    * sbuf = new ExpandingFile('/path/to/file.txt')
    *
    * await sbuf.write('test')

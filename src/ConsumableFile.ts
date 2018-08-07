@@ -46,7 +46,7 @@ export class ConsumableFile implements ConsumableResource {
    *
    * @example
    * ```
-   * import { ConsumableFile } from 'ByteAccordion'
+   * import { ConsumableFile } from 'byteaccordion'
    * const filepath = '/path/to/file.txt'
    * const cbuf = new ConsumableFile(filepath)
    *
