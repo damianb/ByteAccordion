@@ -22,7 +22,7 @@ pipeline {
   }
   agent {
     docker {
-      image 'node:8.11.1-alpine'
+      image 'node:8.11.3-alpine'
     }
   }
   environment {
@@ -59,21 +59,8 @@ pipeline {
     }
 
     stage('Build') {
-      parallel {
-        // currently disabled - no use building docs as we can't commit them back
-        //   without causing a build loop.
-        /*
-        stage('Build Docs') {
-          steps {
-            sh 'npm run docs'
-          }
-        }
-        */
-        stage('Build JS') {
-          steps {
-            sh 'npm run build'
-          }
-        }
+      steps {
+        sh 'npm run build'
       }
     }
   }
