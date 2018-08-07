@@ -7,7 +7,7 @@
 Ensure you have at least node.js v7.6+, and then...
 
 ``` bash
-$ yarn add https://github.com/damianb/ByteAccordion.git
+$ yarn add byteaccordion
 ```
 
 ### How do I use this library?
