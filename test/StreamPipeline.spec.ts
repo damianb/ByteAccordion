@@ -79,7 +79,7 @@ describe('StreamPipeline tests', () => {
       }
 
       expect(res).to.be.an.instanceof(Error)
-      expect(res.message).to.equal('StreamPipeline.pump expects the destination provided to exist and be readable.')
+      expect(res.message).to.equal('StreamPipeline.pump expects the source path provided to exist and be readable.')
     })
 
     it('should correctly pump only a part of a file if specified', async () => {
