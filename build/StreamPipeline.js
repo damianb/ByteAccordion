@@ -18,7 +18,7 @@ class StreamPipeline {
      *
      * @example
      * ```
-     * import { ExpandingFile, StreamPipeline } from 'ByteAccordion'
+     * import { ExpandingFile, StreamPipeline } from 'byteaccordion'
      * sbuf = new ExpandingFile('/path/to/file/to/write/to.txt')
      * sfile = new StreamPipeline()
      *
@@ -83,7 +83,7 @@ class StreamPipeline {
                 await fs.access(source, fs.constants.R_OK);
             }
             catch (err) {
-                throw new Error('StreamPipeline.pump expects the destination provided to exist and be readable.');
+                throw new Error('StreamPipeline.pump expects the source path provided to exist and be readable.');
             }
             fd = await fs.open(source, 'r', 0o755);
         }

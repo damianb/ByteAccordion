@@ -17,7 +17,7 @@ class ExpandingBuffer {
      *
      * @example
      * ```
-     * import { ExpandingBuffer } from 'ByteAccordion'
+     * import { ExpandingBuffer } from 'byteaccordion'
      * sbuf = new ExpandingBuffer()
      *
      * await sbuf.write('test')

@@ -17,7 +17,7 @@ class ConsumableBuffer {
      *
      * @example
      * ```
-     * import { ConsumableBuffer } from 'ByteAccordion'
+     * import { ConsumableBuffer } from 'byteaccordion'
      * const myBuffer = Buffer.from('SUPER TEST BUFFER HERE')
      * cbuf = new ConsumableBuffer(myBuffer)
      *
@@ -73,8 +73,11 @@ class ConsumableBuffer {
      * ```
      */
     async read(bytes) {
-        if (isNaN(bytes) || !isFinite(bytes) || bytes <= 0) {
+        if (isNaN(bytes) || !isFinite(bytes) || bytes < 0) {
             throw new Error('Bytes parameter must be a positive integer.');
+        }
+        if (bytes === 0) {
+            return Buffer.alloc(0);
         }
         bytes = Math.floor(bytes);
         if (bytes > this.buf.length) {

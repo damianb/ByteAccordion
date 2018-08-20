@@ -178,8 +178,12 @@ export class ConsumableFile implements ConsumableResource {
       throw new Error('File does not appear to have been opened.')
     }
 
-    if (isNaN(bytes) || !isFinite(bytes) || bytes <= 0) {
+    if (isNaN(bytes) || !isFinite(bytes) || bytes < 0) {
       throw new Error('Bytes parameter must be a positive integer.')
+    }
+
+    if (bytes === 0) {
+      return Buffer.alloc(0)
     }
 
     if ((this.position + bytes) > this.filesize) {

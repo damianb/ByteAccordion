@@ -18,7 +18,7 @@ class ConsumableFile {
      *
      * @example
      * ```
-     * import { ConsumableFile } from 'ByteAccordion'
+     * import { ConsumableFile } from 'byteaccordion'
      * const filepath = '/path/to/file.txt'
      * const cbuf = new ConsumableFile(filepath)
      *
@@ -142,8 +142,11 @@ class ConsumableFile {
         if (!this.fd || this.filesize === undefined) {
             throw new Error('File does not appear to have been opened.');
         }
-        if (isNaN(bytes) || !isFinite(bytes) || bytes <= 0) {
+        if (isNaN(bytes) || !isFinite(bytes) || bytes < 0) {
             throw new Error('Bytes parameter must be a positive integer.');
+        }
+        if (bytes === 0) {
+            return Buffer.alloc(0);
         }
         if ((this.position + bytes) > this.filesize) {
             throw new RangeError('File exhausted; attempted to read beyond file.');

@@ -49,7 +49,7 @@ export declare class StreamPipeline {
      *
      * @example
      * ```
-     * import { ExpandingFile, StreamPipeline } from 'ByteAccordion'
+     * import { ExpandingFile, StreamPipeline } from 'byteaccordion'
      * sbuf = new ExpandingFile('/path/to/file/to/write/to.txt')
      * sfile = new StreamPipeline()
      *

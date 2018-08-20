@@ -89,8 +89,12 @@ export class ConsumableBuffer implements ConsumableResource {
    * ```
    */
   public async read (bytes: number): Promise<Buffer> {
-    if (isNaN(bytes) || !isFinite(bytes) || bytes <= 0) {
+    if (isNaN(bytes) || !isFinite(bytes) || bytes < 0) {
       throw new Error('Bytes parameter must be a positive integer.')
+    }
+
+    if (bytes === 0) {
+      return Buffer.alloc(0)
     }
 
     bytes = Math.floor(bytes)

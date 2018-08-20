@@ -20,7 +20,7 @@ export declare class ConsumableBuffer implements ConsumableResource {
      *
      * @example
      * ```
-     * import { ConsumableBuffer } from 'ByteAccordion'
+     * import { ConsumableBuffer } from 'byteaccordion'
      * const myBuffer = Buffer.from('SUPER TEST BUFFER HERE')
      * cbuf = new ConsumableBuffer(myBuffer)
      *
