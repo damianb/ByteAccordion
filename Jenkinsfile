@@ -57,7 +57,7 @@ pipeline {
         }
         stage('Trigger Sonarqube') {
           steps {
-            build job: '/SMTK/byteaccordion-sonar', parameters: [string(name: 'GIT_COMMIT', value: "${GIT_COMMIT}")], propagate: false, wait: false
+            build job: '/SMTK/ByteAccordion-sonar', parameters: [string(name: 'GIT_COMMIT', value: "${GIT_COMMIT}")], propagate: false, wait: false
           }
         }
       }
