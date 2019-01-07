@@ -58,9 +58,7 @@ sonar.projectVersion=1.0
 sonar.sourceEncoding=UTF-8
 sonar.sources=.
 
-sonar.exclusions=node_modules/**
-
-sonar.typescript.exclusions=node_modules/**,test/**,docs/**,build/**
+sonar.exclusions=node_modules/**,test/**,docs/**,build/**
 CONF
           """
 
