@@ -895,8 +895,6 @@ img { max-width: 100%; }
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 							<input type="checkbox" id="tsd-filter-only-exported" />
 							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
@@ -1021,8 +1019,7 @@ img { max-width: 100%; }
 								<dd><pre><code><span class="hljs-keyword">import</span> { ExpandingBuffer } <span class="hljs-keyword">from</span> <span class="hljs-string">'byteaccordion'</span>
 sbuf = <span class="hljs-keyword">new</span> ExpandingBuffer()
 
-<span class="hljs-keyword">await</span> sbuf.write(<span class="hljs-string">'test'</span>)
-</code></pre></dd>
+<span class="hljs-keyword">await</span> sbuf.write(<span class="hljs-string">'test'</span>)</code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-returns-title">Returns <a href="expandingbuffer.html" class="tsd-signature-type">ExpandingBuffer</a></h4>
@@ -1090,8 +1087,7 @@ sbuf = <span class="hljs-keyword">new</span> ExpandingBuffer()
 <span class="hljs-keyword">await</span> sbuf.write(<span class="hljs-string">'test'</span>)
 <span class="hljs-keyword">await</span> sbuf.reset()
 
-<span class="hljs-comment">// sbuf is now back to an empty, clean state</span>
-</code></pre></dd>
+<span class="hljs-comment">// sbuf is now back to an empty, clean state</span></code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1122,8 +1118,7 @@ sbuf = <span class="hljs-keyword">new</span> ExpandingBuffer()
 await sbuf.<span class="hljs-built_in">write</span>(<span class="hljs-string">'test'</span>)
 await sbuf.<span class="hljs-built_in">write</span>(<span class="hljs-string">'test2'</span>)
 
-<span class="hljs-comment">// sbuf.buf, when dumped, will be a buffer containing "testtest2"</span>
-</code></pre></dd>
+<span class="hljs-comment">// sbuf.buf, when dumped, will be a buffer containing "testtest2"</span></code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>

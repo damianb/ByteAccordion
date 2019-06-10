@@ -895,8 +895,6 @@ img { max-width: 100%; }
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 							<input type="checkbox" id="tsd-filter-only-exported" />
 							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
@@ -1029,8 +1027,7 @@ img { max-width: 100%; }
 								<dd><pre><code><span class="hljs-keyword">import</span> { ExpandingFile } <span class="hljs-keyword">from</span> <span class="hljs-string">'byteaccordion'</span>
 sbuf = <span class="hljs-keyword">new</span> ExpandingFile(<span class="hljs-string">'/path/to/file.txt'</span>)
 
-<span class="hljs-keyword">await</span> sbuf.write(<span class="hljs-string">'test'</span>)
-</code></pre></dd>
+<span class="hljs-keyword">await</span> sbuf.write(<span class="hljs-string">'test'</span>)</code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1127,8 +1124,7 @@ await sbuf.<span class="hljs-keyword">open</span>()
 // ...
 
 await sbuf.<span class="hljs-keyword">close</span>()
-// <span class="hljs-keyword">no</span> longer able <span class="hljs-keyword">to</span> <span class="hljs-keyword">read</span> from sbuf, state <span class="hljs-keyword">is</span> reset <span class="hljs-built_in">and</span> clean.
-</code></pre></dd>
+// <span class="hljs-keyword">no</span> longer able <span class="hljs-keyword">to</span> <span class="hljs-keyword">read</span> from sbuf, state <span class="hljs-keyword">is</span> reset <span class="hljs-built_in">and</span> clean.</code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1158,8 +1154,7 @@ await sbuf.<span class="hljs-keyword">close</span>()
 								<dd><pre><code><span class="hljs-keyword">const</span> filepath = <span class="hljs-string">'/path/to/file.txt'</span>
 <span class="hljs-keyword">const</span> sbuf = <span class="hljs-keyword">new</span> ExpandingFile(filepath)
 await sbuf.<span class="hljs-built_in">open</span>()
-<span class="hljs-comment">// now able to write to sbuf!</span>
-</code></pre></dd>
+<span class="hljs-comment">// now able to write to sbuf!</span></code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1191,8 +1186,7 @@ await sbuf.<span class="hljs-built_in">open</span>()
 await sbuf.<span class="hljs-built_in">write</span>(<span class="hljs-string">'test'</span>)
 await sbuf.<span class="hljs-built_in">write</span>(<span class="hljs-string">'test2'</span>)
 
-<span class="hljs-comment">// the file, when opened, will contain "testtest2"</span>
-</code></pre></dd>
+<span class="hljs-comment">// the file, when opened, will contain "testtest2"</span></code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>

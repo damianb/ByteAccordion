@@ -895,8 +895,6 @@ img { max-width: 100%; }
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 							<input type="checkbox" id="tsd-filter-only-exported" />
 							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
@@ -1036,8 +1034,7 @@ cbuf = <span class="hljs-keyword">new</span> ConsumableBuffer(myBuffer)
 <span class="hljs-comment">// reads the next 4 bytes and returns a promise</span>
 <span class="hljs-comment">//   await lets it resolve before storing into rdBuffer</span>
 
-<span class="hljs-built_in">console</span>.log(rdBuffer.toString()) <span class="hljs-comment">// and this also outputs "TEST"</span>
-</code></pre></dd>
+<span class="hljs-built_in">console</span>.log(rdBuffer.toString()) <span class="hljs-comment">// and this also outputs "TEST"</span></code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1123,8 +1120,7 @@ cbuf = <span class="hljs-keyword">new</span> ConsumableBuffer(myBuffer)
 <span class="hljs-keyword">await</span> cbuf.aseek(<span class="hljs-number">1</span>)
 <span class="hljs-comment">// and read one byte...</span>
 readBuffer = <span class="hljs-keyword">await</span> cbuf.read(<span class="hljs-number">1</span>)
-<span class="hljs-comment">// we'd still get the same thing - &lt;Buffer 45&gt;</span>
-</code></pre></dd>
+<span class="hljs-comment">// we'd still get the same thing - &lt;Buffer 45&gt;</span></code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1171,8 +1167,7 @@ readBuffer = <span class="hljs-keyword">await</span> cbuf.read(<span class="hljs
 <span class="hljs-keyword">const</span> cbuf = <span class="hljs-keyword">new</span> ConsumableBuffer(myBuffer)
 <span class="hljs-keyword">const</span> readBuffer = <span class="hljs-keyword">await</span> cbuf.read(<span class="hljs-number">2</span>)
 
-<span class="hljs-comment">// readBuffer would equal &lt;Buffer 54 45&gt;</span>
-</code></pre></dd>
+<span class="hljs-comment">// readBuffer would equal &lt;Buffer 54 45&gt;</span></code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1215,8 +1210,7 @@ readBuffer = <span class="hljs-keyword">await</span> cbuf.read(<span class="hljs
 <span class="hljs-keyword">const</span> cbuf = <span class="hljs-keyword">new</span> ConsumableBuffer(myBuffer)
 <span class="hljs-keyword">const</span> resetBuffer = <span class="hljs-keyword">await</span> cbuf.reset()
 
-<span class="hljs-comment">// myBuffer and resetBuffer possess the exact same contents</span>
-</code></pre></dd>
+<span class="hljs-comment">// myBuffer and resetBuffer possess the exact same contents</span></code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1253,8 +1247,7 @@ readBuffer = <span class="hljs-keyword">await</span> cbuf.read(<span class="hljs
 
 <span class="hljs-comment">// next read or seek will start one character over, so if we did...</span>
 <span class="hljs-keyword">const</span> readBuffer = <span class="hljs-keyword">await</span> cbuf.read(<span class="hljs-number">1</span>)
-<span class="hljs-comment">// ...it would equal &lt;Buffer 45&gt;</span>
-</code></pre></dd>
+<span class="hljs-comment">// ...it would equal &lt;Buffer 45&gt;</span></code></pre></dd>
 							</dl>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>

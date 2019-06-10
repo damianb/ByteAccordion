@@ -4,7 +4,7 @@
 
 ### How do I install this library?
 
-Ensure you have at least node.js v7.6+, and then...
+Ensure you have at least node.js v10+, and then...
 
 ``` bash
 $ yarn add byteaccordion
