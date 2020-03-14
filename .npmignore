@@ -8,4 +8,4 @@ test/*
 .yarnrc
 Jenkinsfile
 tsconfig.json
-tslint.json
+.eslintrc
