@@ -87,13 +87,15 @@ export class StreamPipeline {
    * @param  dest - The ExpandingFile instance for the file to write to. **NOT compatible with ExpandingBuffer.**
    * @return {Promise<void>}
    */
+  // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async load (dest: ExpandingFile): Promise<void> {
-    if (!dest.fd) {
+    if (dest.fd === undefined) {
       throw new Error('StreamPipeline.load expects an already-opened ExpandingFile instance.')
     }
 
     this.sbuf = dest
-    let streamOpts: StreamOptions = {
+    const streamOpts: StreamOptions = {
       fd: dest.fd,
       flags: 'w',
       mode: 0o755,
@@ -101,8 +103,6 @@ export class StreamPipeline {
     }
 
     this.destination = fs.createWriteStream('', streamOpts)
-
-    return
   }
 
   /**
@@ -135,21 +135,21 @@ export class StreamPipeline {
       fd = await fs.open(source, 'r', 0o755)
     }
 
-    let streamOpts: StreamOptions = {
+    const streamOpts: StreamOptions = {
       fd: fd,
       flags: 'r',
       mode: 0o755,
       autoClose: false
     }
 
-    if (start) {
+    if (start !== undefined) {
       streamOpts.start = start
-      if (length) {
+      if (length !== undefined) {
         streamOpts.end = start + length - 1
       }
     }
 
-    let content = fs.createReadStream('', streamOpts)
+    const content = fs.createReadStream('', streamOpts)
     const res = await this._pump(content)
     if (typeof source === 'string') {
       await fs.close(fd)
@@ -167,19 +167,21 @@ export class StreamPipeline {
    * @param  content - The content to pipe into the destination stream.
    * @return {Promise<PumpResult>} - Returns an object containing the offset and length of what was just written to the destination.
    */
+  // NO, TYPESCRIPT-ESLINT. THIS CANNOT BE WRITTEN AS AN ASYNC FUNCTION YOU STUPID OPINIONATED FUCKS.
+  // eslint-disable-next-line @typescript-eslint/promise-function-async
   public _pump (content: fs.ReadStream | Buffer): Promise<PumpResult> {
     return new Promise((resolve, reject) => {
       if (Buffer.isBuffer(content)) {
-        if (!this.sbuf || !this.destination) {
+        if (this.sbuf === undefined || this.destination === undefined) {
           return
         }
 
         this.destination.write(content, () => {
-          if (!this.sbuf) {
+          if (this.sbuf === undefined) {
             return
           }
 
-          let oldPosition = this.sbuf.position
+          const oldPosition = this.sbuf.position
           this.sbuf.position += content.length
 
           const res: PumpResult = { offset: oldPosition, wrote: content.length }
@@ -187,25 +189,23 @@ export class StreamPipeline {
         })
       } else {
         // note: we're assuming fs.ReadStream here
-        if (!this.destination) {
+        if (this.destination === undefined) {
           return
         }
 
         content.on('end', () => {
-          if (!this.sbuf) {
+          if (this.sbuf === undefined) {
             return
           }
 
           content.unpipe(this.destination)
-          let oldPosition = this.sbuf.position
+          const oldPosition = this.sbuf.position
           this.sbuf.position += content.bytesRead
 
           const res: PumpResult = { offset: oldPosition, wrote: content.bytesRead }
           return resolve(res)
         })
-        content.on('error', (err: any) => {
-          reject(err)
-        })
+        content.on('error', (err: any) => reject(err))
         content.pipe(this.destination, { end: false })
       }
     })

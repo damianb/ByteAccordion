@@ -54,11 +54,11 @@ export class ExpandingBuffer implements ExpandingResource {
    * // sbuf is now back to an empty, clean state
    * ```
    */
+  // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async reset (): Promise<void> {
     this.buf = Buffer.alloc(0)
     this.position = 0
-
-    return
   }
 
   /**
@@ -76,6 +76,8 @@ export class ExpandingBuffer implements ExpandingResource {
    * // sbuf.buf, when dumped, will be a buffer containing "testtest2"
    * ```
    */
+  // Must be async to satisfy the ExpandingResource interface
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async write (input: Buffer | number[] | number | string): Promise<number> {
     let inBuffer = null
     if (Buffer.isBuffer(input)) {

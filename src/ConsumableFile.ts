@@ -93,8 +93,6 @@ export class ConsumableFile implements ConsumableResource {
     const stats = await fs.fstat(this.fd)
     this.filesize = stats.size
     this.position = 0
-
-    return
   }
 
   /**
@@ -116,14 +114,12 @@ export class ConsumableFile implements ConsumableResource {
    * ```
    */
   public async close (): Promise<void> {
-    if (this.fd) {
+    if (this.fd !== undefined) {
       await fs.close(this.fd)
     }
 
     this.fd = this.filesize = undefined
     this.position = 0
-
-    return
   }
 
   /**
@@ -146,10 +142,10 @@ export class ConsumableFile implements ConsumableResource {
    * // readBuffer would again equal <Buffer 54 45>
    * ```
    */
+  // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async reset (): Promise<void> {
     this.position = 0
-
-    return
   }
 
   /**
@@ -174,7 +170,7 @@ export class ConsumableFile implements ConsumableResource {
    * ```
    */
   public async read (bytes: number): Promise<Buffer> {
-    if (!this.fd || this.filesize === undefined) {
+    if (this.fd === undefined || this.filesize === undefined) {
       throw new Error('File does not appear to have been opened.')
     }
 
@@ -251,8 +247,10 @@ export class ConsumableFile implements ConsumableResource {
    * // we'd still get the same thing - <Buffer 45>
    * ```
    */
+  // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async aseek (bytes: number): Promise<void> {
-    if (!this.fd || this.filesize === undefined) {
+    if (this.fd === undefined || this.filesize === undefined) {
       throw new Error('File does not appear to have been opened.')
     }
 
@@ -265,7 +263,5 @@ export class ConsumableFile implements ConsumableResource {
     }
 
     this.position = Math.floor(bytes)
-
-    return
   }
 }

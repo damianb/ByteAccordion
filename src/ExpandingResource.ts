@@ -7,9 +7,9 @@
 //
 
 export interface ExpandingResource {
-	/**
-	 * How many bytes have we written to this resource?
-	 */
+  /**
+   * How many bytes have we written to this resource?
+   */
   position: number
 
   /**

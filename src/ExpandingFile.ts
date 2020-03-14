@@ -71,8 +71,6 @@ export class ExpandingFile implements ExpandingResource {
   public async open (): Promise<void> {
     this.fd = await fs.open(this.path, 'w', 0o755)
     this.position = 0
-
-    return
   }
 
   /**
@@ -94,14 +92,12 @@ export class ExpandingFile implements ExpandingResource {
    * ```
    */
   public async close (): Promise<void> {
-    if (this.fd) {
+    if (this.fd !== undefined) {
       await fs.close(this.fd)
     }
 
     this.fd = undefined
     this.position = 0
-
-    return
   }
 
   /**
@@ -121,7 +117,7 @@ export class ExpandingFile implements ExpandingResource {
    * ```
    */
   public async write (input: Buffer | number[] | number | string): Promise<number> {
-    if (!this.fd) {
+    if (this.fd === undefined) {
       throw new Error('File does not yet appear to be opened.')
     }
 

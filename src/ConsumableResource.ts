@@ -7,11 +7,11 @@
 //
 
 export interface ConsumableResource {
-	/**
-	 * Resets the current working position in the resource.
-	 *
-	 * @return {Promise<void>}
-	 */
+  /**
+   * Resets the current working position in the resource.
+   *
+   * @return {Promise<void>}
+   */
   reset (): Promise<void>
 
   /**
