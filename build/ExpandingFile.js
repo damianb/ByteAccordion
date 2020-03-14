@@ -2,7 +2,7 @@
 //
 // ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
 //
-// @copyright (c) 2018 Damian Bushong <katana@odios.us>
+// @copyright (c) 2020 Damian Bushong <katana@odios.us>
 // @license MIT license
 // @url <https://github.com/damianb/ByteAccordion>
 //
@@ -47,7 +47,6 @@ class ExpandingFile {
     async open() {
         this.fd = await fs.open(this.path, 'w', 0o755);
         this.position = 0;
-        return;
     }
     /**
      * Closes the file, preventing future writing.
@@ -68,12 +67,11 @@ class ExpandingFile {
      * ```
      */
     async close() {
-        if (this.fd) {
+        if (this.fd !== undefined) {
             await fs.close(this.fd);
         }
         this.fd = undefined;
         this.position = 0;
-        return;
     }
     /**
      * Write to the expanding file.
@@ -92,7 +90,7 @@ class ExpandingFile {
      * ```
      */
     async write(input) {
-        if (!this.fd) {
+        if (this.fd === undefined) {
             throw new Error('File does not yet appear to be opened.');
         }
         let inBuffer = null;

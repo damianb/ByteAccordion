@@ -2,7 +2,7 @@
 //
 // ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
 //
-// @copyright (c) 2018 Damian Bushong <katana@odios.us>
+// @copyright (c) 2020 Damian Bushong <katana@odios.us>
 // @license MIT license
 // @url <https://github.com/damianb/ByteAccordion>
 //
@@ -65,7 +65,6 @@ class ConsumableFile {
         const stats = await fs.fstat(this.fd);
         this.filesize = stats.size;
         this.position = 0;
-        return;
     }
     /**
      * Closes the file, preventing future reading.
@@ -86,12 +85,11 @@ class ConsumableFile {
      * ```
      */
     async close() {
-        if (this.fd) {
+        if (this.fd !== undefined) {
             await fs.close(this.fd);
         }
         this.fd = this.filesize = undefined;
         this.position = 0;
-        return;
     }
     /**
      * Resets the ConsumableFile to its origin position.
@@ -113,9 +111,10 @@ class ConsumableFile {
      * // readBuffer would again equal <Buffer 54 45>
      * ```
      */
+    // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
+    // eslint-disable-next-line @typescript-eslint/require-await
     async reset() {
         this.position = 0;
-        return;
     }
     /**
      * Reads within the file.
@@ -139,7 +138,7 @@ class ConsumableFile {
      * ```
      */
     async read(bytes) {
-        if (!this.fd || this.filesize === undefined) {
+        if (this.fd === undefined || this.filesize === undefined) {
             throw new Error('File does not appear to have been opened.');
         }
         if (isNaN(bytes) || !isFinite(bytes) || bytes < 0) {
@@ -209,8 +208,10 @@ class ConsumableFile {
      * // we'd still get the same thing - <Buffer 45>
      * ```
      */
+    // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
+    // eslint-disable-next-line @typescript-eslint/require-await
     async aseek(bytes) {
-        if (!this.fd || this.filesize === undefined) {
+        if (this.fd === undefined || this.filesize === undefined) {
             throw new Error('File does not appear to have been opened.');
         }
         if (isNaN(bytes) || !isFinite(bytes) || bytes <= 0) {
@@ -220,7 +221,6 @@ class ConsumableFile {
             throw new RangeError('File exhausted; attempted to seek beyond file.');
         }
         this.position = Math.floor(bytes);
-        return;
     }
 }
 exports.ConsumableFile = ConsumableFile;

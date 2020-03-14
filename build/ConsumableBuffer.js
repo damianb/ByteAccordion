@@ -2,7 +2,7 @@
 //
 // ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.
 //
-// @copyright (c) 2018 Damian Bushong <katana@odios.us>
+// @copyright (c) 2020 Damian Bushong <katana@odios.us>
 // @license MIT license
 // @url <https://github.com/damianb/ByteAccordion>
 //
@@ -49,9 +49,10 @@ class ConsumableBuffer {
      * // myBuffer and resetBuffer possess the exact same contents
      * ```
      */
+    // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
+    // eslint-disable-next-line @typescript-eslint/require-await
     async reset() {
         this.buf = this.originalBuffer;
-        return;
     }
     /**
      * Reads and "consumes" the buffer, returning everything read and advancing through the buffer with each read call.
@@ -72,6 +73,8 @@ class ConsumableBuffer {
      * // readBuffer would equal <Buffer 54 45>
      * ```
      */
+    // Must be async to satisfy the ConsumableResource interface
+    // eslint-disable-next-line @typescript-eslint/require-await
     async read(bytes) {
         if (isNaN(bytes) || !isFinite(bytes) || bytes < 0) {
             throw new Error('Bytes parameter must be a positive integer.');
@@ -112,7 +115,6 @@ class ConsumableBuffer {
             throw new RangeError('Buffer exhausted; attempted to seek beyond buffer.');
         }
         await this.read(bytes);
-        return;
     }
     /**
      * Seeks absolutely within the *original* buffer.
