@@ -6,6 +6,8 @@
 // @url <https://github.com/damianb/ByteAccordion>
 //
 
+// istanbul ignore file
+
 export { ConsumableBuffer } from './ConsumableBuffer'
 export { ConsumableFile } from './ConsumableFile'
 export { ExpandingBuffer } from './ExpandingBuffer'
