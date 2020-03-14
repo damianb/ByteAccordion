@@ -36,14 +36,14 @@
     "fs-extra": "^8.0.1"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.7",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
-    "mocha": "^6.1.4",
+    "mocha": "^7.1.0",
     "ts-node": "^7.0.0",
     "tslint": "^5.17.0",
     "tslint-config-standard": "^8.0.1",
-    "typedoc": "^0.14.2",
-    "typescript": "^3.5.1"
+    "typedoc": "^0.16.11",
+    "typescript": "^3.8.3"
   }
 }
