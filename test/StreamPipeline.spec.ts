@@ -19,7 +19,7 @@ describe('StreamPipeline tests', () => {
   describe('StreamPipeline.load', () => {
     let sbuf: ExpandingFile
     let sfile: StreamPipeline
-    beforeEach(async () => {
+    beforeEach(() => {
       sbuf = new ExpandingFile(filePath)
       sfile = new StreamPipeline()
     })
@@ -86,7 +86,7 @@ describe('StreamPipeline tests', () => {
       await sfile.pump(path.join(__dirname, '/samples/TestFile1.txt'), 5, 4)
       await sbuf.close()
 
-      let res = (await fs.readFile(filePath)).toString('utf8')
+      const res = (await fs.readFile(filePath)).toString('utf8')
 
       expect(res).to.equal('file')
     })
@@ -112,21 +112,21 @@ describe('StreamPipeline tests', () => {
     })
 
     it('should take a Stream.Readable and pipe content into the destination correctly', async () => {
-      let rstream = fs.createReadStream(path.join(__dirname, '/samples/TestFile1.txt'))
+      const rstream = fs.createReadStream(path.join(__dirname, '/samples/TestFile1.txt'))
       await sfile._pump(rstream)
       await sbuf.close()
 
-      let res = (await fs.readFile(filePath)).toString('utf8')
+      const res = (await fs.readFile(filePath)).toString('utf8')
 
       expect(res).to.equal('Test file\n')
     })
 
     it('should write a buffer directly into the destination correctly', async () => {
-      let expectedString = 'my test'
+      const expectedString = 'my test'
       await sfile._pump(Buffer.from(expectedString))
       await sbuf.close()
 
-      let res = (await fs.readFile(filePath)).toString('utf8')
+      const res = (await fs.readFile(filePath)).toString('utf8')
 
       expect(res).to.equal(expectedString)
     })

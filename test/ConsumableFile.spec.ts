@@ -13,7 +13,7 @@ import { ConsumableFile } from './../src/ConsumableFile'
 describe('ConsumableFile tests', () => {
   const filePath = path.join(__dirname, '/samples/ConsumableFileTest.txt')
   let sbuf: ConsumableFile
-  beforeEach(async () => {
+  beforeEach(() => {
     sbuf = new ConsumableFile(filePath)
   })
 

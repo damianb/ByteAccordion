@@ -89,15 +89,13 @@ describe('ExpandingFile tests', () => {
       it('should advance position when writing', async () => {
         const buf = Buffer.from([0x01])
         const expectedBuffer = Buffer.from([0x01, 0x02])
-        let res: Buffer
-        let wrote: number
 
-        wrote = await sbuf.write(buf)
+        const wrote: number = await sbuf.write(buf)
         expect(wrote).to.equal(1)
 
         await sbuf.write(0x02)
         await sbuf.close()
-        res = await fs.readFile(filePath)
+        const res: Buffer = await fs.readFile(filePath)
 
         expect(res.length).to.equal(2)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
@@ -105,11 +103,10 @@ describe('ExpandingFile tests', () => {
 
       it('should be able to take a Buffer as input correctly', async () => {
         const buf = Buffer.from([0x01])
-        let res: Buffer
 
         await sbuf.write(buf)
         await sbuf.close()
-        res = await fs.readFile(filePath)
+        const res: Buffer = await fs.readFile(filePath)
 
         expect(res.length).to.equal(buf.length)
         expect(Buffer.compare(res, buf)).to.equal(0)
@@ -118,11 +115,10 @@ describe('ExpandingFile tests', () => {
       it('should be able to take an array as input correctly', async () => {
         const input = [0x01, 0x02]
         const expectedBuffer = Buffer.from(input)
-        let res: Buffer
 
         await sbuf.write(input)
         await sbuf.close()
-        res = await fs.readFile(filePath)
+        const res: Buffer = await fs.readFile(filePath)
 
         expect(res.length).to.equal(expectedBuffer.length)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
@@ -131,11 +127,10 @@ describe('ExpandingFile tests', () => {
       it('should be able to take a string as input correctly', async () => {
         const input = 'test'
         const expectedBuffer = Buffer.from(input)
-        let res: Buffer
 
         await sbuf.write(input)
         await sbuf.close()
-        res = await fs.readFile(filePath)
+        const res: Buffer = await fs.readFile(filePath)
 
         expect(res.length).to.equal(expectedBuffer.length)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
@@ -144,11 +139,10 @@ describe('ExpandingFile tests', () => {
       it('should be able to take a number as input correctly', async () => {
         const input = -65535
         const expectedBuffer = Buffer.from([input])
-        let res: Buffer
 
         await sbuf.write(input)
         await sbuf.close()
-        res = await fs.readFile(filePath)
+        const res: Buffer = await fs.readFile(filePath)
 
         expect(res.length).to.equal(expectedBuffer.length)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
@@ -159,14 +153,13 @@ describe('ExpandingFile tests', () => {
           0x74, 0x65, 0x73, 0x74, 0x00, 0x01, 0x00, 0x74,
           0x65, 0x73, 0x74, 0x20, 0x65, 0x6e, 0x64
         ])
-        let res: Buffer
 
         await sbuf.write('test')
         await sbuf.write([0x00, 0x01])
         await sbuf.write(0x00)
         await sbuf.write('test end')
         await sbuf.close()
-        res = await fs.readFile(filePath)
+        const res: Buffer = await fs.readFile(filePath)
 
         expect(res.length).to.equal(expectedBuffer.length)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
