@@ -63,10 +63,10 @@ export class ConsumableBuffer implements ConsumableResource {
    * // myBuffer and resetBuffer possess the exact same contents
    * ```
    */
+  // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async reset (): Promise<void> {
     this.buf = this.originalBuffer
-
-    return
   }
 
   /**
@@ -88,6 +88,8 @@ export class ConsumableBuffer implements ConsumableResource {
    * // readBuffer would equal <Buffer 54 45>
    * ```
    */
+  // Must be async to satisfy the ConsumableResource interface
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async read (bytes: number): Promise<Buffer> {
     if (isNaN(bytes) || !isFinite(bytes) || bytes < 0) {
       throw new Error('Bytes parameter must be a positive integer.')
@@ -135,8 +137,6 @@ export class ConsumableBuffer implements ConsumableResource {
     }
 
     await this.read(bytes)
-
-    return
   }
 
   /**
