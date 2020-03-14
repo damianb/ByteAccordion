@@ -53,7 +53,7 @@ pipeline {
             sh """
               $NPM_BIN/nyc $NPM_BIN/mocha \
                 --config test/.ci.mocharc.json \
-                --reporter-options configFile=tests/mocha.json \
+                --reporter-options configFile=test/mocha.json \
                 ./test/*.spec.ts
             """.stripIndent()
           }
