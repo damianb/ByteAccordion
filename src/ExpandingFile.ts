@@ -6,7 +6,8 @@
 // @url <https://github.com/damianb/ByteAccordion>
 //
 
-import * as fs from 'fs-extra'
+import * as fs from 'fs'
+import { FileHandle } from 'fs/promises'
 
 import { ExpandingResource } from './ExpandingResource'
 
@@ -25,7 +26,7 @@ export class ExpandingFile implements ExpandingResource {
    *
    * @private
    */
-  public fd?: number
+  public fd?: FileHandle
 
   /**
    * How far into the file we are currently, in bytes.
@@ -69,7 +70,7 @@ export class ExpandingFile implements ExpandingResource {
    * ```
    */
   public async open (): Promise<void> {
-    this.fd = await fs.open(this.path, 'w', 0o755)
+    this.fd = await fs.promises.open(this.path, 'w', 0o755)
     this.position = 0
   }
 
@@ -93,7 +94,7 @@ export class ExpandingFile implements ExpandingResource {
    */
   public async close (): Promise<void> {
     if (this.fd !== undefined) {
-      await fs.close(this.fd)
+      await this.fd.close()
     }
 
     this.fd = undefined
@@ -134,7 +135,7 @@ export class ExpandingFile implements ExpandingResource {
       inBuffer = Buffer.from([input])
     }
 
-    const { bytesWritten } = await fs.write(this.fd, inBuffer, 0, inBuffer.length, this.position)
+    const { bytesWritten } = await this.fd.write(inBuffer, 0, inBuffer.length, this.position)
     this.position += bytesWritten
 
     return this.position
