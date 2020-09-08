@@ -15,7 +15,7 @@
     "eslint-config-standard-with-typescript"
   ],
   "rules": {
-    "@typescript-eslint/return-await": "never",
-    "@typescript-eslint/method-signature-style": "method"
+    "@typescript-eslint/return-await": ["error", "never"],
+    "@typescript-eslint/method-signature-style": ["error", "method"]
   }
 }
