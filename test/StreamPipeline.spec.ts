@@ -7,7 +7,7 @@
 //
 
 import { expect } from 'chai'
-import * as fs from 'fs-extra'
+import * as fs from 'fs'
 import * as stream from 'stream'
 import * as path from 'path'
 import { StreamPipeline } from './../src/StreamPipeline'
@@ -26,7 +26,7 @@ describe('StreamPipeline tests', () => {
 
     afterEach(async () => {
       // ensure we do not leave any dangling file descriptors
-      if (sbuf.fd !== null) {
+      if (sbuf.fh !== null) {
         await sbuf.close()
       }
     })
@@ -62,10 +62,10 @@ describe('StreamPipeline tests', () => {
     })
 
     afterEach(async () => {
-      await fs.unlink(filePath)
+      await fs.promises.unlink(filePath)
 
       // ensure we do not leave any dangling file descriptors
-      if (sbuf.fd !== null) {
+      if (sbuf.fh !== null) {
         await sbuf.close()
       }
     })
@@ -86,7 +86,7 @@ describe('StreamPipeline tests', () => {
       await sfile.pump(path.join(__dirname, '/samples/TestFile1.txt'), 5, 4)
       await sbuf.close()
 
-      const res = (await fs.readFile(filePath)).toString('utf8')
+      const res = (await fs.promises.readFile(filePath)).toString('utf8')
 
       expect(res).to.equal('file')
     })
@@ -103,10 +103,10 @@ describe('StreamPipeline tests', () => {
     })
 
     afterEach(async () => {
-      await fs.unlink(filePath)
+      await fs.promises.unlink(filePath)
 
       // ensure we do not leave any dangling file descriptors
-      if (sbuf.fd !== null) {
+      if (sbuf.fh !== null) {
         await sbuf.close()
       }
     })
@@ -116,7 +116,7 @@ describe('StreamPipeline tests', () => {
       await sfile._pump(rstream)
       await sbuf.close()
 
-      const res = (await fs.readFile(filePath)).toString('utf8')
+      const res = (await fs.promises.readFile(filePath)).toString('utf8')
 
       expect(res).to.equal('Test file\n')
     })
@@ -126,7 +126,7 @@ describe('StreamPipeline tests', () => {
       await sfile._pump(Buffer.from(expectedString))
       await sbuf.close()
 
-      const res = (await fs.readFile(filePath)).toString('utf8')
+      const res = (await fs.promises.readFile(filePath)).toString('utf8')
 
       expect(res).to.equal(expectedString)
     })
@@ -152,10 +152,10 @@ describe('StreamPipeline tests', () => {
     })
 
     afterEach(async () => {
-      await fs.unlink(filePath)
+      await fs.promises.unlink(filePath)
 
       // ensure we do not leave any dangling file descriptors
-      if (sbuf.fd !== null) {
+      if (sbuf.fh !== null) {
         await sbuf.close()
       }
     })
@@ -183,7 +183,7 @@ describe('StreamPipeline tests', () => {
 
       expect(sbuf.position).to.equal(54)
 
-      res = (await fs.readFile(filePath)).toString('utf8')
+      res = (await fs.promises.readFile(filePath)).toString('utf8')
       expect(res).to.equal('Start testTest file\nAnother test file -n\n\ntestEnd test')
     })
   })

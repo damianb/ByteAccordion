@@ -26,7 +26,7 @@ export class ExpandingFile implements ExpandingResource {
    *
    * @private
    */
-  public fd?: FileHandle
+  public fh?: FileHandle
 
   /**
    * How far into the file we are currently, in bytes.
@@ -51,7 +51,7 @@ export class ExpandingFile implements ExpandingResource {
    */
   constructor (path: string) {
     this.path = path
-    this.fd = undefined
+    this.fh = undefined
     this.position = 0
   }
 
@@ -70,7 +70,7 @@ export class ExpandingFile implements ExpandingResource {
    * ```
    */
   public async open (): Promise<void> {
-    this.fd = await fs.promises.open(this.path, 'w', 0o755)
+    this.fh = await fs.promises.open(this.path, 'w', 0o755)
     this.position = 0
   }
 
@@ -93,11 +93,11 @@ export class ExpandingFile implements ExpandingResource {
    * ```
    */
   public async close (): Promise<void> {
-    if (this.fd !== undefined) {
-      await this.fd.close()
+    if (this.fh !== undefined) {
+      await this.fh.close()
     }
 
-    this.fd = undefined
+    this.fh = undefined
     this.position = 0
   }
 
@@ -118,7 +118,7 @@ export class ExpandingFile implements ExpandingResource {
    * ```
    */
   public async write (input: Buffer | number[] | number | string): Promise<number> {
-    if (this.fd === undefined) {
+    if (this.fh === undefined) {
       throw new Error('File does not yet appear to be opened.')
     }
 
@@ -135,7 +135,7 @@ export class ExpandingFile implements ExpandingResource {
       inBuffer = Buffer.from([input])
     }
 
-    const { bytesWritten } = await this.fd.write(inBuffer, 0, inBuffer.length, this.position)
+    const { bytesWritten } = await this.fh.write(inBuffer, 0, inBuffer.length, this.position)
     this.position += bytesWritten
 
     return this.position

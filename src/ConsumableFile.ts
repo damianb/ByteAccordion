@@ -24,7 +24,7 @@ export class ConsumableFile implements ConsumableResource {
    *
    * @private
    */
-  public fd?: FileHandle
+  public fh?: FileHandle
 
   /**
    * The size of the file we're consuming, in bytes.
@@ -65,7 +65,7 @@ export class ConsumableFile implements ConsumableResource {
    */
   constructor (path: string) {
     this.path = path
-    this.fd = this.filesize = undefined
+    this.fh = this.filesize = undefined
     this.position = 0
   }
 
@@ -90,8 +90,8 @@ export class ConsumableFile implements ConsumableResource {
     } catch (err) {
       throw new Error('ConsumableFile.open expects the path provided to be readable.')
     }
-    this.fd = await fs.promises.open(this.path, 'r', 0o666)
-    const stats = await fs.promises.fstat(this.fd)
+    this.fh = await fs.promises.open(this.path, 'r', 0o666)
+    const stats = await this.fh.stat()
     this.filesize = stats.size
     this.position = 0
   }
@@ -115,11 +115,11 @@ export class ConsumableFile implements ConsumableResource {
    * ```
    */
   public async close (): Promise<void> {
-    if (this.fd !== undefined) {
-      await this.fd.close()
+    if (this.fh !== undefined) {
+      await this.fh.close()
     }
 
-    this.fd = this.filesize = undefined
+    this.fh = this.filesize = undefined
     this.position = 0
   }
 
@@ -171,7 +171,7 @@ export class ConsumableFile implements ConsumableResource {
    * ```
    */
   public async read (bytes: number): Promise<Buffer> {
-    if (this.fd === undefined || this.filesize === undefined) {
+    if (this.fh === undefined || this.filesize === undefined) {
       throw new Error('File does not appear to have been opened.')
     }
 
@@ -187,7 +187,7 @@ export class ConsumableFile implements ConsumableResource {
       throw new RangeError('File exhausted; attempted to read beyond file.')
     }
 
-    const { bytesRead, buffer } = await this.fd.read(Buffer.alloc(bytes), 0, bytes, this.position)
+    const { bytesRead, buffer } = await this.fh.read(Buffer.alloc(bytes), 0, bytes, this.position)
     this.position += bytes
     if (bytesRead !== bytes) {
       throw new Error('Failed to read number of bytes requested.') // ???
@@ -251,7 +251,7 @@ export class ConsumableFile implements ConsumableResource {
   // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
   // eslint-disable-next-line @typescript-eslint/require-await
   public async aseek (bytes: number): Promise<void> {
-    if (this.fd === undefined || this.filesize === undefined) {
+    if (this.fh === undefined || this.filesize === undefined) {
       throw new Error('File does not appear to have been opened.')
     }
 

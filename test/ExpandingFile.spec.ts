@@ -7,7 +7,7 @@
 //
 
 import { expect } from 'chai'
-import * as fs from 'fs-extra'
+import * as fs from 'fs'
 import * as path from 'path'
 import { ExpandingFile } from './../src/ExpandingFile'
 
@@ -19,26 +19,26 @@ describe('ExpandingFile tests', () => {
   })
 
   afterEach(async () => {
-    await fs.unlink(filePath)
+    await fs.promises.unlink(filePath)
 
     // ensure we do not leave any dangling file descriptors
-    if (sbuf.fd !== null) {
+    if (sbuf.fh !== null) {
       await sbuf.close()
     }
   })
 
-  describe('ExpandingFile file descriptor handling', () => {
+  describe('ExpandingFile FileHandler handling', () => {
     describe('ExpandingFile.open', () => {
       afterEach(async () => {
-        if (sbuf.fd !== null) {
+        if (sbuf.fh !== null) {
           await sbuf.close()
         }
       })
 
-      it('should open a file and store a file descriptor in ExpandingFile.fd', async () => {
+      it('should open a file and store a FileHandler in ExpandingFile.fd', async () => {
         await sbuf.open()
 
-        expect(sbuf.fd).to.be.a('number')
+        expect(sbuf.fh?.fd).to.be.a('number')
       })
 
       it('should start with correct metadata about the file', async () => {
@@ -55,15 +55,15 @@ describe('ExpandingFile tests', () => {
       })
 
       afterEach(async () => {
-        if (sbuf.fd !== null) {
+        if (sbuf.fh !== null) {
           await sbuf.close()
         }
       })
 
-      it('should close the file and clear the file descriptor in ExpandingFile.fd', async () => {
+      it('should close the file and clear the FileHandler in ExpandingFile.fd', async () => {
         await sbuf.close()
 
-        expect(sbuf.fd).to.equal(undefined)
+        expect(sbuf.fh).to.equal(undefined)
       })
 
       it('should clear out file metadata after closing the file', async () => {
@@ -80,7 +80,7 @@ describe('ExpandingFile tests', () => {
     })
 
     afterEach(async () => {
-      if (sbuf.fd !== null) {
+      if (sbuf.fh !== null) {
         await sbuf.close()
       }
     })
@@ -95,7 +95,7 @@ describe('ExpandingFile tests', () => {
 
         await sbuf.write(0x02)
         await sbuf.close()
-        const res: Buffer = await fs.readFile(filePath)
+        const res: Buffer = await fs.promises.readFile(filePath)
 
         expect(res.length).to.equal(2)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
@@ -106,7 +106,7 @@ describe('ExpandingFile tests', () => {
 
         await sbuf.write(buf)
         await sbuf.close()
-        const res: Buffer = await fs.readFile(filePath)
+        const res: Buffer = await fs.promises.readFile(filePath)
 
         expect(res.length).to.equal(buf.length)
         expect(Buffer.compare(res, buf)).to.equal(0)
@@ -118,7 +118,7 @@ describe('ExpandingFile tests', () => {
 
         await sbuf.write(input)
         await sbuf.close()
-        const res: Buffer = await fs.readFile(filePath)
+        const res: Buffer = await fs.promises.readFile(filePath)
 
         expect(res.length).to.equal(expectedBuffer.length)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
@@ -130,7 +130,7 @@ describe('ExpandingFile tests', () => {
 
         await sbuf.write(input)
         await sbuf.close()
-        const res: Buffer = await fs.readFile(filePath)
+        const res: Buffer = await fs.promises.readFile(filePath)
 
         expect(res.length).to.equal(expectedBuffer.length)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
@@ -142,7 +142,7 @@ describe('ExpandingFile tests', () => {
 
         await sbuf.write(input)
         await sbuf.close()
-        const res: Buffer = await fs.readFile(filePath)
+        const res: Buffer = await fs.promises.readFile(filePath)
 
         expect(res.length).to.equal(expectedBuffer.length)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
@@ -159,7 +159,7 @@ describe('ExpandingFile tests', () => {
         await sbuf.write(0x00)
         await sbuf.write('test end')
         await sbuf.close()
-        const res: Buffer = await fs.readFile(filePath)
+        const res: Buffer = await fs.promises.readFile(filePath)
 
         expect(res.length).to.equal(expectedBuffer.length)
         expect(Buffer.compare(res, expectedBuffer)).to.equal(0)
