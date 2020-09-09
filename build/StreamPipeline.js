@@ -7,7 +7,8 @@
 // @url <https://github.com/damianb/ByteAccordion>
 //
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs = require("fs-extra");
+exports.StreamPipeline = void 0;
+const fs = require("fs");
 class StreamPipeline {
     /**
      * StreamPipeline is a class designed to wrap around ExpandingFile instances to specifically aid in copying large chunks of files into the destination,
@@ -44,12 +45,12 @@ class StreamPipeline {
     // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
     // eslint-disable-next-line @typescript-eslint/require-await
     async load(dest) {
-        if (dest.fd === undefined) {
+        if (dest.fh === undefined) {
             throw new Error('StreamPipeline.load expects an already-opened ExpandingFile instance.');
         }
         this.sbuf = dest;
         const streamOpts = {
-            fd: dest.fd,
+            fd: dest.fh.fd,
             flags: 'w',
             mode: 0o755,
             autoClose: false
@@ -65,31 +66,31 @@ class StreamPipeline {
      * @return {Promise<PumpResult>} - Returns an object containing the offset and length of what was just written to the destination.
      */
     async pump(source, start, length) {
-        let fd = null;
+        let fh = null;
         if (Buffer.isBuffer(source)) {
             return this._pump(source);
         }
-        else if (typeof source === 'number') {
+        else if ((typeof source) === 'string') {
             try {
-                await fs.fstat(source);
+                await fs.promises.access(source, fs.constants.R_OK);
+            }
+            catch (err) {
+                throw new Error('StreamPipeline.pump expects the source path provided to exist and be readable.');
+            }
+            fh = await fs.promises.open(source, 'r', 0o755);
+        }
+        else {
+            fh = source;
+            try {
+                await fh.stat();
             }
             catch (err) {
                 // got an int, but it doesn't seem to be a file descriptor...
                 throw new TypeError('StreamPipeline.pump expects either a Buffer, file descriptor or filepath for a source.');
             }
-            fd = source;
-        }
-        else {
-            try {
-                await fs.access(source, fs.constants.R_OK);
-            }
-            catch (err) {
-                throw new Error('StreamPipeline.pump expects the source path provided to exist and be readable.');
-            }
-            fd = await fs.open(source, 'r', 0o755);
         }
         const streamOpts = {
-            fd: fd,
+            fd: fh.fd,
             flags: 'r',
             mode: 0o755,
             autoClose: false
@@ -103,7 +104,7 @@ class StreamPipeline {
         const content = fs.createReadStream('', streamOpts);
         const res = await this._pump(content);
         if (typeof source === 'string') {
-            await fs.close(fd);
+            await fh.close();
         }
         return res;
     }

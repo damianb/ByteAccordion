@@ -1,5 +1,6 @@
 /// <reference types="node" />
-import * as fs from 'fs-extra';
+import * as fs from 'fs';
+import { FileHandle } from 'fs/promises';
 import { ExpandingFile } from './ExpandingFile';
 /**
  * @private
@@ -79,7 +80,7 @@ export declare class StreamPipeline {
      * @param  length - (optional) Identifies how many bytes to read and pump into the destination.
      * @return {Promise<PumpResult>} - Returns an object containing the offset and length of what was just written to the destination.
      */
-    pump(source: Buffer | number | string, start?: number, length?: number): Promise<PumpResult>;
+    pump(source: Buffer | FileHandle | string, start?: number, length?: number): Promise<PumpResult>;
     /**
      * Handles the intricate part of hooking up the ReadStream to the WriteStream.
      *   Yes, this manually creates a promise - we need to, instead of making an async function, in order to

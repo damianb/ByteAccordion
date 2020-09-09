@@ -7,7 +7,8 @@
 // @url <https://github.com/damianb/ByteAccordion>
 //
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs = require("fs-extra");
+exports.ConsumableFile = void 0;
+const fs = require("fs");
 class ConsumableFile {
     /**
      * ConsumableFile is a class designed to, like ConsumableBuffer, wrap around node.js file descriptors to allow for more fluid seeking/reading capabilities,
@@ -36,7 +37,7 @@ class ConsumableFile {
      */
     constructor(path) {
         this.path = path;
-        this.fd = this.filesize = undefined;
+        this.fh = this.filesize = undefined;
         this.position = 0;
     }
     /**
@@ -56,13 +57,13 @@ class ConsumableFile {
      */
     async open() {
         try {
-            await fs.access(this.path, fs.constants.R_OK);
+            await fs.promises.access(this.path, fs.constants.R_OK);
         }
         catch (err) {
             throw new Error('ConsumableFile.open expects the path provided to be readable.');
         }
-        this.fd = await fs.open(this.path, 'r', 0o666);
-        const stats = await fs.fstat(this.fd);
+        this.fh = await fs.promises.open(this.path, 'r', 0o666);
+        const stats = await this.fh.stat();
         this.filesize = stats.size;
         this.position = 0;
     }
@@ -85,10 +86,10 @@ class ConsumableFile {
      * ```
      */
     async close() {
-        if (this.fd !== undefined) {
-            await fs.close(this.fd);
+        if (this.fh !== undefined) {
+            await this.fh.close();
         }
-        this.fd = this.filesize = undefined;
+        this.fh = this.filesize = undefined;
         this.position = 0;
     }
     /**
@@ -138,7 +139,7 @@ class ConsumableFile {
      * ```
      */
     async read(bytes) {
-        if (this.fd === undefined || this.filesize === undefined) {
+        if (this.fh === undefined || this.filesize === undefined) {
             throw new Error('File does not appear to have been opened.');
         }
         if (isNaN(bytes) || !isFinite(bytes) || bytes < 0) {
@@ -150,7 +151,7 @@ class ConsumableFile {
         if ((this.position + bytes) > this.filesize) {
             throw new RangeError('File exhausted; attempted to read beyond file.');
         }
-        const { bytesRead, buffer } = await fs.read(this.fd, Buffer.alloc(bytes), 0, bytes, this.position);
+        const { bytesRead, buffer } = await this.fh.read(Buffer.alloc(bytes), 0, bytes, this.position);
         this.position += bytes;
         if (bytesRead !== bytes) {
             throw new Error('Failed to read number of bytes requested.'); // ???
@@ -211,7 +212,7 @@ class ConsumableFile {
     // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
     // eslint-disable-next-line @typescript-eslint/require-await
     async aseek(bytes) {
-        if (this.fd === undefined || this.filesize === undefined) {
+        if (this.fh === undefined || this.filesize === undefined) {
             throw new Error('File does not appear to have been opened.');
         }
         if (isNaN(bytes) || !isFinite(bytes) || bytes <= 0) {

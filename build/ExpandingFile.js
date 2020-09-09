@@ -7,7 +7,8 @@
 // @url <https://github.com/damianb/ByteAccordion>
 //
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs = require("fs-extra");
+exports.ExpandingFile = void 0;
+const fs = require("fs");
 class ExpandingFile {
     /**
      * ExpandingFile is a class designed to wrap around node.js file to allow for more fluid writing capabilities,
@@ -27,7 +28,7 @@ class ExpandingFile {
      */
     constructor(path) {
         this.path = path;
-        this.fd = undefined;
+        this.fh = undefined;
         this.position = 0;
     }
     /**
@@ -45,7 +46,7 @@ class ExpandingFile {
      * ```
      */
     async open() {
-        this.fd = await fs.open(this.path, 'w', 0o755);
+        this.fh = await fs.promises.open(this.path, 'w', 0o755);
         this.position = 0;
     }
     /**
@@ -67,10 +68,10 @@ class ExpandingFile {
      * ```
      */
     async close() {
-        if (this.fd !== undefined) {
-            await fs.close(this.fd);
+        if (this.fh !== undefined) {
+            await this.fh.close();
         }
-        this.fd = undefined;
+        this.fh = undefined;
         this.position = 0;
     }
     /**
@@ -90,7 +91,7 @@ class ExpandingFile {
      * ```
      */
     async write(input) {
-        if (this.fd === undefined) {
+        if (this.fh === undefined) {
             throw new Error('File does not yet appear to be opened.');
         }
         let inBuffer = null;
@@ -108,7 +109,7 @@ class ExpandingFile {
         else {
             inBuffer = Buffer.from([input]);
         }
-        const { bytesWritten } = await fs.write(this.fd, inBuffer, 0, inBuffer.length, this.position);
+        const { bytesWritten } = await this.fh.write(inBuffer, 0, inBuffer.length, this.position);
         this.position += bytesWritten;
         return this.position;
     }

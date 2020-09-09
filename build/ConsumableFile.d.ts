@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import { FileHandle } from 'fs/promises';
 import { ConsumableResource } from './ConsumableResource';
 export declare class ConsumableFile implements ConsumableResource {
     /**
@@ -12,7 +13,7 @@ export declare class ConsumableFile implements ConsumableResource {
      *
      * @private
      */
-    fd?: number;
+    fh?: FileHandle;
     /**
      * The size of the file we're consuming, in bytes.
      *

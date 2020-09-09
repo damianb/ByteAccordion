@@ -7,6 +7,7 @@
 // @url <https://github.com/damianb/ByteAccordion>
 //
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ExpandingBuffer = void 0;
 class ExpandingBuffer {
     /**
      * ExpandingBuffer is a class designed to wrap around node.js buffers to allow for more fluid writing capabilities,

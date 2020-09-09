@@ -7,6 +7,7 @@
 // @url <https://github.com/damianb/ByteAccordion>
 //
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConsumableBuffer = void 0;
 class ConsumableBuffer {
     /**
      * ConsumableBuffer is a class designed to wrap around node.js buffers to allow for more fluid seeking/reading capabilities,

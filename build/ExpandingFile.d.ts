@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import { FileHandle } from 'fs/promises';
 import { ExpandingResource } from './ExpandingResource';
 export declare class ExpandingFile implements ExpandingResource {
     /**
@@ -12,7 +13,7 @@ export declare class ExpandingFile implements ExpandingResource {
      *
      * @private
      */
-    fd?: number;
+    fh?: FileHandle;
     /**
      * How far into the file we are currently, in bytes.
      */

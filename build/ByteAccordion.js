@@ -7,14 +7,16 @@
 // @url <https://github.com/damianb/ByteAccordion>
 //
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.StreamPipeline = exports.ExpandingFile = exports.ExpandingBuffer = exports.ConsumableFile = exports.ConsumableBuffer = void 0;
+// istanbul ignore file
 var ConsumableBuffer_1 = require("./ConsumableBuffer");
-exports.ConsumableBuffer = ConsumableBuffer_1.ConsumableBuffer;
+Object.defineProperty(exports, "ConsumableBuffer", { enumerable: true, get: function () { return ConsumableBuffer_1.ConsumableBuffer; } });
 var ConsumableFile_1 = require("./ConsumableFile");
-exports.ConsumableFile = ConsumableFile_1.ConsumableFile;
+Object.defineProperty(exports, "ConsumableFile", { enumerable: true, get: function () { return ConsumableFile_1.ConsumableFile; } });
 var ExpandingBuffer_1 = require("./ExpandingBuffer");
-exports.ExpandingBuffer = ExpandingBuffer_1.ExpandingBuffer;
+Object.defineProperty(exports, "ExpandingBuffer", { enumerable: true, get: function () { return ExpandingBuffer_1.ExpandingBuffer; } });
 var ExpandingFile_1 = require("./ExpandingFile");
-exports.ExpandingFile = ExpandingFile_1.ExpandingFile;
+Object.defineProperty(exports, "ExpandingFile", { enumerable: true, get: function () { return ExpandingFile_1.ExpandingFile; } });
 var StreamPipeline_1 = require("./StreamPipeline");
-exports.StreamPipeline = StreamPipeline_1.StreamPipeline;
+Object.defineProperty(exports, "StreamPipeline", { enumerable: true, get: function () { return StreamPipeline_1.StreamPipeline; } });
 //# sourceMappingURL=ByteAccordion.js.map
