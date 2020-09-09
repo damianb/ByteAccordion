@@ -6,7 +6,8 @@
 // @url <https://github.com/damianb/ByteAccordion>
 //
 
-import * as fs from 'fs-extra'
+import * as fs from 'fs'
+import { FileHandle } from 'fs/promises'
 
 import { ExpandingFile } from './ExpandingFile'
 
@@ -90,13 +91,13 @@ export class StreamPipeline {
   // todo: change to a normal method. currently ignored as going from Promise to non-Promise return will result in an API break.
   // eslint-disable-next-line @typescript-eslint/require-await
   public async load (dest: ExpandingFile): Promise<void> {
-    if (dest.fd === undefined) {
+    if (dest.fh === undefined) {
       throw new Error('StreamPipeline.load expects an already-opened ExpandingFile instance.')
     }
 
     this.sbuf = dest
     const streamOpts: StreamOptions = {
-      fd: dest.fd,
+      fd: dest.fh.fd,
       flags: 'w',
       mode: 0o755,
       autoClose: false
@@ -113,30 +114,29 @@ export class StreamPipeline {
    * @param  length - (optional) Identifies how many bytes to read and pump into the destination.
    * @return {Promise<PumpResult>} - Returns an object containing the offset and length of what was just written to the destination.
    */
-  public async pump (source: Buffer | number | string, start?: number, length?: number): Promise<PumpResult> {
-    let fd = null
+  public async pump (source: Buffer | FileHandle | string, start?: number, length?: number): Promise<PumpResult> {
+    let fh = null
     if (Buffer.isBuffer(source)) {
       return this._pump(source)
-    } else if (typeof source === 'number') {
+    } else if ((typeof source) === 'string') {
       try {
-        await fs.fstat(source)
+        await fs.promises.access(source as string, fs.constants.R_OK)
+      } catch (err) {
+        throw new Error('StreamPipeline.pump expects the source path provided to exist and be readable.')
+      }
+      fh = await fs.promises.open(source as string, 'r', 0o755)
+    } else {
+      fh = source as FileHandle
+      try {
+        await fh.stat()
       } catch (err) {
         // got an int, but it doesn't seem to be a file descriptor...
         throw new TypeError('StreamPipeline.pump expects either a Buffer, file descriptor or filepath for a source.')
       }
-
-      fd = source
-    } else {
-      try {
-        await fs.access(source, fs.constants.R_OK)
-      } catch (err) {
-        throw new Error('StreamPipeline.pump expects the source path provided to exist and be readable.')
-      }
-      fd = await fs.open(source, 'r', 0o755)
     }
 
     const streamOpts: StreamOptions = {
-      fd: fd,
+      fd: fh.fd,
       flags: 'r',
       mode: 0o755,
       autoClose: false
@@ -152,7 +152,7 @@ export class StreamPipeline {
     const content = fs.createReadStream('', streamOpts)
     const res = await this._pump(content)
     if (typeof source === 'string') {
-      await fs.close(fd)
+      await fh.close()
     }
 
     return res

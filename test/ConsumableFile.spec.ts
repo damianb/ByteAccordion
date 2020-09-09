@@ -19,20 +19,21 @@ describe('ConsumableFile tests', () => {
 
   afterEach(async () => {
     // ensure we do not leave any dangling file descriptors
-    if (sbuf.fd !== null) {
+    if (sbuf.fh !== null) {
       await sbuf.close()
     }
   })
 
-  describe('ConsumableFile file descriptor handling', () => {
+  describe('ConsumableFile FileHandler handling', () => {
     describe('ConsumableFile.open', () => {
       afterEach(async () => {
         await sbuf.close()
       })
 
-      it('should open a file and store a file descriptor in ConsumableFile.fd', async () => {
+      it('should open a file and store a FileHandler in ConsumableFile.fh', async () => {
         await sbuf.open()
-        expect(sbuf.fd).to.be.a('number')
+        expect(sbuf.fh).to.not.equal(undefined)
+        expect(sbuf.fh?.fd).to.be.a('number')
       })
 
       it('should start with correct metadata about the file', async () => {
@@ -50,9 +51,9 @@ describe('ConsumableFile tests', () => {
         await sbuf.open()
       })
 
-      it('should close the file and clear the file descriptor in ConsumableFile.fd', async () => {
+      it('should close the file and clear the FileHandler in ConsumableFile.fh', async () => {
         await sbuf.close()
-        expect(sbuf.fd).to.equal(undefined)
+        expect(sbuf.fh).to.equal(undefined)
       })
 
       it('should clear out file metadata after closing the file', async () => {
@@ -70,7 +71,7 @@ describe('ConsumableFile tests', () => {
     })
     afterEach(async () => {
       // close it if not already closed!
-      if (sbuf.fd !== null) {
+      if (sbuf.fh !== null) {
         await sbuf.close()
       }
     })
