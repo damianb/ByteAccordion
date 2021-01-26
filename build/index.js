@@ -19,4 +19,4 @@ var ExpandingFile_1 = require("./ExpandingFile");
 Object.defineProperty(exports, "ExpandingFile", { enumerable: true, get: function () { return ExpandingFile_1.ExpandingFile; } });
 var StreamPipeline_1 = require("./StreamPipeline");
 Object.defineProperty(exports, "StreamPipeline", { enumerable: true, get: function () { return StreamPipeline_1.StreamPipeline; } });
-//# sourceMappingURL=ByteAccordion.js.map
+//# sourceMappingURL=index.js.map

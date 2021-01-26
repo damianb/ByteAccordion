@@ -1,6 +1,6 @@
 {
   "name": "byteaccordion",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -8,10 +8,10 @@
     "docs": "typedoc ./src/index.ts",
     "style": "eslint ./src/*.ts",
     "unit": "cross-env NODE_ENV=test nyc mocha --config test/.mocharc.json --reporter-options configFile=test/mocha.json ./test/*.spec.ts",
-    "test": "npm run style && npm run unit",
+    "test": "yarn run style && yarn run unit",
     "build": "tsc -p ./tsconfig.json",
-    "qc": "npm run build && npm run style && npm run unit",
-    "prepublishOnly": "npm run docs && npm run build && npm run style && npm run unit"
+    "qc": "yarn run build && yarn run style && yarn run unit",
+    "prepublishOnly": "yarn run docs && yarn run build && yarn run style && yarn run unit"
   },
   "repository": {
     "type": "git",
