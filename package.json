@@ -2,10 +2,10 @@
   "name": "byteaccordion",
   "version": "1.1.6",
   "description": "ByteAccordion - JS library for smooth, Promise-based interaction with File and Buffer resources.",
-  "main": "build/ByteAccordion.js",
-  "types": "build/ByteAccordion.d.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "scripts": {
-    "docs": "typedoc ./src/",
+    "docs": "typedoc ./src/index.ts",
     "style": "eslint ./src/*.ts",
     "unit": "cross-env NODE_ENV=test nyc mocha --config test/.mocharc.json --reporter-options configFile=test/mocha.json ./test/*.spec.ts",
     "test": "npm run style && npm run unit",
